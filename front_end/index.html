@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Management System</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <header>
+        <div class="container">
+            <h1>Student Management System</h1>
+        </div>
+    </header>
+
+    <section class="form-section">
+        <div class="container">
+            <h2>Add New Student</h2>
+            <form id="addStudentForm">
+                <input type="text" id="name" placeholder="Student Name" required />
+                <input type="text" id="studentID" placeholder="Student ID" required />
+                <input type="email" id="emailId" placeholder="Email ID" required />
+                <input type="number" id="phoneId" placeholder="phone ID" required />
+                <button type="submit">Add Student</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="search-section">
+        <div class="container">
+            <h2>Search Students</h2>
+            <form id="searchForm">
+                <input type="text" id="searchName" placeholder="Enter Student Name" />
+                <button type="submit">Search</button>
+            </form>
+        </div>
+    </section>
+
+    <section class="student-list">
+        <div class="container">
+            <h2>Student List</h2>
+            <div class="student-card">
+                <div class="student-info">
+                    <div class="student-detail">
+                        <h1>John Doe</h1>
+                        <p>Student ID: 12345</p>
+                        <p>Email: johndoe@example.com</p>
+                        <p>Phone: 123-456-7890</p>
+                    </div>
+                    <div class="btn-student">
+                        <button type="button" class="btn add-btn">Add</button>
+                        <button type="button" class="btn edit-btn">Edit</button>
+                        <button type="button" class="btn delete-btn">Delete</button>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Student Management System | All Rights Reserved</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

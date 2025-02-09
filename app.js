@@ -1,78 +1,72 @@
-const express = require("express");
-const { MongoClient, ObjectId } = require("mongodb");
-const app = express();
-app.use(express.json());
+document.addEventListener('DOMContentLoaded', () => {
+    // Function to handle form submission
+    const addStudentForm = document.getElementById('addStudentForm');
+    addStudentForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevents the default form submission behavior
 
-let db;
+        // Get form input values
+        const studentName = document.getElementById('name').value;
+        const studentID = document.getElementById('studentID').value;
+        const emailId = document.getElementById('emailId').value;
+        const phoneId = document.getElementById('phoneId').value;
 
-const client = new MongoClient("mongodb://127.0.0.1:27017", { useUnifiedTopology: true });
-client.connect().then(() => {
-    db = client.db("ecommerce");
-    console.log("MongoDB connected");
-}).catch((err) => {
-    console.error("MongoDB not connected", err);
-});
+        // Call the function to add the student card
+        addStudent(studentName, studentID, emailId, phoneId);
 
-// ดึงข้อมูลทั้งหมด
-app.get('/product', async (req, res) => {
-    try {
-        const product = await db.collection("product").find().toArray();
-        res.json(product);
-    } catch (err) {
-        console.error("Error fetching products", err);
-        res.status(500).json({ error: "Internal Server Error" });
+        // Clear the form inputs after submission
+        addStudentForm.reset();
+    });
+
+    // Function to create a new student card
+    function addStudent(name, id, email, phone) {
+        // Create a new student card element
+        const studentCard = document.createElement('div');
+        studentCard.classList.add('student-card');
+
+        // Create the student info content
+        const studentInfo = document.createElement('div');
+        studentInfo.classList.add('student-info');
+
+        const studentDetail = document.createElement('div');
+        studentDetail.classList.add('student-detail');
+
+        studentDetail.innerHTML = `
+                    <h1>${name}</h1>
+                    <p>Student ID: ${id}</p>
+                    <p>Email: ${email}</p>
+                    <p>Phone: ${phone}</p>
+                `;
+
+        // Create buttons for the student card
+        const btnStudent = document.createElement('div');
+        btnStudent.classList.add('btn-student');
+
+        const addBtn = document.createElement('button');
+        addBtn.type = 'button';
+        addBtn.classList.add('btn', 'add-btn');
+        addBtn.innerText = 'Add';
+
+        const editBtn = document.createElement('button');
+        editBtn.type = 'button';
+        editBtn.classList.add('btn', 'edit-btn');
+        editBtn.innerText = 'Edit';
+
+        const deleteBtn = document.createElement('button');
+        deleteBtn.type = 'button';
+        deleteBtn.classList.add('btn', 'delete-btn');
+        deleteBtn.innerText = 'Delete';
+
+        btnStudent.appendChild(addBtn);
+        btnStudent.appendChild(editBtn);
+        btnStudent.appendChild(deleteBtn);
+
+        // Append student details and buttons to the student card
+        studentInfo.appendChild(studentDetail);
+        studentInfo.appendChild(btnStudent);
+        studentCard.appendChild(studentInfo);
+
+        // Append the new student card to the container
+        const studentsContainer = document.getElementById('students-container');
+        studentsContainer.appendChild(studentCard);
     }
 });
-
-// ดึงข้อมูลตาม topping
-app.get('/product/topping/:topping', async (req, res) => {
-    try {
-        const topping = req.params.topping;
-        const product = await db.collection("product").find({
-            "topping": { $in: [{ "name": topping }] }
-        }).toArray();
-        res.json(product);
-    } catch (err) {
-        console.error("Error fetching products by topping", err);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
-
-// ดึงข้อมูลรายการนั้น
-app.get('/product/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const product = await db.collection("product").findOne({ "_id": new ObjectId(id) });
-        res.json(product);
-    } catch (err) {
-        console.error("Error fetching product by ID", err);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
-
-// เพิ่มข้อมูลใหม่
-app.post('/product', async (req, res) => {
-    try {
-        const data = req.body;
-        const product = await db.collection("product").insertOne(data);
-        res.json(product);
-    } catch (err) {
-        console.error("Error inserting product", err);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
-
-// แก้ไขข้อมูล
-app.put('/product/:id', async (req, res) => {
-    try {
-        const id = req.params.id;
-        const data = req.body;
-        const product = await db.collection("product").updateOne({ "_id": new ObjectId(id) }, { $set: data });
-        res.json(product);
-    } catch (err) {
-        console.error("Error updating product", err);
-        res.status(500).json({ error: "Internal Server Error" });
-    }
-});
-
-app.listen(3000, () => { console.log('Server started: success'); });
