@@ -1,0 +1,20 @@
+{
+    "transactions": [
+      {
+        "id": 1,
+        "date": "2025-02-24",
+        "type": "income",
+        "amount": 5000,
+        "category": "เงินเดือน",
+        "description": "เงินเดือนกุมภาพันธ์"
+      },
+      {
+        "id": 2,
+        "date": "2025-02-24",
+        "type": "expense",
+        "amount": 200,
+        "category": "อาหาร",
+        "description": "ซื้อข้าวเที่ยง"
+      }
+    ]
+  }
